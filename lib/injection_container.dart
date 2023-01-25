@@ -16,6 +16,7 @@ import 'package:order/features/event/presentation/cubit/ticket_cubit.dart';
 import 'package:order/features/login/data/datasources/remote_login_user.dart';
 import 'package:order/features/login/domain/usecases/login_usecase.dart';
 import 'package:order/features/login/domain/usecases/remote_login_usecase.dart';
+import 'package:order/features/login/domain/usecases/remote_logout_usecase.dart';
 import 'package:order/features/login/presentation/cubit/login_cubit.dart';
 import 'package:order/features/register/data/datasource/remote_register_user_datasource.dart';
 import 'package:order/features/register/data/reporisatory/register_reporisatory_impl.dart';
@@ -49,6 +50,8 @@ void init() {
   //usecases with singelton dessign pattern
   sl.registerLazySingleton<LoginUsecase>(() => LoginUsecase(sl()));
   sl.registerLazySingleton<RemoteLoginUsecase>(() => RemoteLoginUsecase(sl()));
+  sl.registerLazySingleton<RemoteLogoutUsecase>(
+      () => RemoteLogoutUsecase(sl()));
 
   //Login bloc cubit
   sl.registerFactory<LoginCubit>(() => LoginCubit());

@@ -4,6 +4,10 @@ class SuccessState extends LoginState {
   SuccessState(logedin);
 }
 
+class SuccessLogoutState extends LoginState {
+  SuccessLogoutState(logedout);
+}
+
 class ErrorState extends LoginState {
   String errorMessage;
 

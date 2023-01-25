@@ -5,6 +5,10 @@ import 'package:order/features/event/presentation/cubit/ticket_cubit.dart';
 import 'package:order/features/event/presentation/cubit/ticket_state.dart';
 import 'package:order/features/event/presentation/pages/ticket_widget.dart';
 import 'package:order/features/event/presentation/pages/widgets/event_add_update_pages/event_add_update_page.dart';
+import 'package:order/features/login/presentation/cubit/login_cubit.dart';
+import 'package:order/features/login/presentation/cubit/login_state.dart';
+import 'package:order/features/login/presentation/pages/login_page.dart';
+import 'package:order/features/login/presentation/pages/login_widget.dart';
 
 class TicketPage extends StatefulWidget {
   const TicketPage({super.key});
@@ -25,10 +29,37 @@ String greetings() {
 }
 
 class _TicketPageState extends State<TicketPage> {
+  final GlobalKey<FormState> _keyform = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Welcome, ${greetings()}')),
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
+        ],
+        title: Text('Welcome, ${greetings()}'),
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            Expanded(child: Container()),
+            Column(
+              children: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    context.read<LoginCubit>().logOut();
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ));
+                  },
+                  icon: const Icon(Icons.logout_outlined),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
       body: _buildBody(),
       floatingActionButton: _buildFloatingBtn(context),
     );
@@ -65,7 +96,6 @@ class _TicketPageState extends State<TicketPage> {
 
   Widget _buildFloatingBtn(BuildContext context) {
     return FloatingActionButton(
-      
       onPressed: () {
         Navigator.push(
             context,

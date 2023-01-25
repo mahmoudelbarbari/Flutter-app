@@ -13,6 +13,11 @@ class AccountRepositoryImlp implements AccountRepository {
     return await remoteLoginDatasource.remoteLoginUser(email, password);
   }
 
+  @override
+  Future<LoginBaseResponse> remoteLogout() async {
+    return await remoteLoginDatasource.remoteLogoutUser();
+  }
+
   // @override
   // Future<LoginBaseResponse> login(String username, String password) async {
   //   User loggedUser = User(username: username, password: password);

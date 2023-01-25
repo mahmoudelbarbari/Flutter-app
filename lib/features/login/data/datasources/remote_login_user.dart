@@ -4,6 +4,7 @@ import 'package:order/features/login/domain/entities/account_entites.dart';
 
 abstract class RemoteLoginDatasource {
   Future<LoginBaseResponse> remoteLoginUser(String email, String password);
+  Future<LoginBaseResponse> remoteLogoutUser();
 }
 
 class RemoteLoginDatasourceImpl implements RemoteLoginDatasource {
@@ -26,5 +27,15 @@ class RemoteLoginDatasourceImpl implements RemoteLoginDatasource {
       return LoginBaseResponse(status: false, message: e.toString());
     }
     return LoginBaseResponse(status: false, message: "Server Error");
+  }
+
+  @override
+  Future<LoginBaseResponse> remoteLogoutUser() async {
+    try {
+      await firebaseDB.auth.signOut();
+      return LoginBaseResponse(status: true, message: "Logout Successfully");
+    } catch (e) {
+      return LoginBaseResponse(status: false, message: e.toString());
+    }
   }
 }
