@@ -1,20 +1,31 @@
-class CartItemsEntity {
-  String? productID;
-  String? productName;
-  num? price;
-  int? quantity;
+class CartEntity {
+  final List<ProductEntity> items;
+  final String id;
+  final String itemName;
+  final int totalQuantity;
+  final String itemId;
+  final double totalPrice;
 
-  CartItemsEntity({
-    this.productID,
-    this.productName,
-    this.price,
-    this.quantity,
-  });
+  CartEntity(
+    this.items,
+    this.id,
+    this.itemName,
+    this.itemId,
+    this.totalPrice,
+    this.totalQuantity,
+  );
 }
 
-class Items {
-  final String itemName;
+class ProductEntity {
+  final String id;
+  final String name;
   final double price;
+  final int quantity;
 
-  Items({required this.itemName, required this.price});
+  ProductEntity(
+    this.id,
+    this.name,
+    this.price,
+    this.quantity,
+  );
 }

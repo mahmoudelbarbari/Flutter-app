@@ -9,12 +9,32 @@ class CartReporisatoryImpl implements CartReporisatory {
   CartReporisatoryImpl(this.cartItemsDatasource);
 
   @override
-  Future<List<CartItemsEntity>> getCartItem() async {
-    return await cartItemsDatasource.getCartItems();
+  Future<List<ProductEntity>> getAllProducts() {
+    // TODO: implement getAllItems
+    throw UnimplementedError();
   }
 
   @override
-  Future<BaseResponse> remoteAddCartItem(CartItemsEntity cartItemsEntity) {
+  Future<BaseResponse> addItemTocart(ProductEntity product) {
+    // TODO: implement addItemTocart
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> decreaseQuantity(CartEntity cartItems) {
+    // TODO: implement decreaseQuantity
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> increaseQuantity(CartEntity cartItems) {
+    // TODO: implement increaseQuantity
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<BaseResponse> removeItemsFromCart(CartEntity cartItems) {
+    // TODO: implement removeItemsFromCart
     throw UnimplementedError();
   }
 }
