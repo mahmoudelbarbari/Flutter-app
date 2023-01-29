@@ -5,7 +5,7 @@ import 'package:order/features/event/domain/reporisatory/ticket_reporisatory.dar
 import 'package:order/features/login/domain/entities/account_entites.dart';
 
 class TicketReporisatoryImlp implements TicketReporisatory {
-  final RemoteTicketDatasource remoteTicketDatasource;
+  final TicketDatasourceInterface remoteTicketDatasource;
   TicketReporisatoryImlp(
     this.remoteTicketDatasource,
   );

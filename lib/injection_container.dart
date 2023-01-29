@@ -91,7 +91,7 @@ void init() {
   //Event_Repository
   // sl.registerLazySingleton<EventRepsitory>(() => EventReporisatoryImpl(sl()));
   sl.registerLazySingleton<TicketReporisatory>(
-      () => TicketReporisatoryImlp(sl<RemoteTicketDatasource>()));
+      () => TicketReporisatoryImlp(sl<TicketDatasourceInterface>()));
 
   // //Event_Usecases
   // sl.registerLazySingleton(() => GetAllEventsUsecase(sl()));
