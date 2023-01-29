@@ -85,8 +85,8 @@ void init() {
 
   //datasource event for db
   // sl.registerLazySingleton(() => EventDatasourceImpl(sl()));
-  sl.registerLazySingleton<RemoteTicketDatasource>(
-      () => RemoteTicketDatasourceImpl(sl<FirebaseDatabseProvider>()));
+  sl.registerLazySingleton<TicketDatasourceInterface>(
+      () => RemoteTicketDatasource());
 
   //Event_Repository
   // sl.registerLazySingleton<EventRepsitory>(() => EventReporisatoryImpl(sl()));
