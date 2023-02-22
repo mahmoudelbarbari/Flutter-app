@@ -1,5 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:order/core/database/firebase_db.dart';
+import 'package:order/features/cart/data/datasource/cart_datasource.dart';
+import 'package:order/features/cart/data/reporisatory_imlp/cart_reporisatory_impl.dart';
+import 'package:order/features/cart/domain/reporisatory/cart_reporisatory.dart';
+import 'package:order/features/cart/domain/usecase/add_cart_data_usecase.dart';
+import 'package:order/features/cart/domain/usecase/add_items_to_cart_usecase.dart';
+import 'package:order/features/cart/domain/usecase/get_all_cart_items_usecase.dart';
+import 'package:order/features/cart/domain/usecase/get_cart_data_usecase.dart';
+import 'package:order/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:order/features/cart/presentation/cubit/cart_data_cubit.dart';
 import 'package:order/features/event/data/datasource/remote_ticket_datasource.dart';
 import 'package:order/features/event/data/reporisatory/remote_ticket_reporisatory_impl.dart';
 import 'package:order/features/event/domain/remote_usecases/add_comment_OnTicket.dart';
@@ -23,6 +32,16 @@ import 'package:order/features/register/data/reporisatory/register_reporisatory_
 import 'package:order/features/register/domain/reposisatory/register_reprisatory.dart';
 import 'package:order/features/register/domain/usecase/register_usecase.dart';
 import 'package:order/features/register/domain/usecase/remote_register_usecase.dart';
+import 'package:order/features/restaurant/data/datasource/restaurant_datasource.dart';
+import 'package:order/features/restaurant/data/reporisatory/restaurant_reporisatory_impl.dart';
+import 'package:order/features/restaurant/domain/reporisatory/restaurant_reporisatory.dart';
+import 'package:order/features/restaurant/domain/usecase/add_menu_items_usecase.dart';
+import 'package:order/features/restaurant/domain/usecase/add_restaurant_usecase.dart';
+import 'package:order/features/restaurant/domain/usecase/get_all_menu.dart';
+import 'package:order/features/restaurant/domain/usecase/get_all_restaurant_usecase.dart';
+import 'package:order/features/restaurant/domain/usecase/upload_image_usecase.dart';
+import 'package:order/features/restaurant/presentation/cubit/menu_cubit.dart';
+import 'package:order/features/restaurant/presentation/cubit/restaurant_cubit.dart';
 import 'features/login/data/datasources/local_login_user.dart';
 import 'features/login/data/reporisatory/account_reporisatory_impl.dart';
 import 'features/login/domain/repositories/account_repository.dart';
@@ -124,4 +143,63 @@ void init() {
   //Event bloc cubit
   // sl.registerLazySingleton(() => EventCubit());
   sl.registerFactory(() => TicketCubit());
+
+//-----------------------------------------------------------------------------------------
+// Restauratn feature (injection).
+//-----------------------------------------------------------------------------------------
+
+//Datasource Restaurant
+  sl.registerLazySingleton<RestaurantDatasourceInterface>(
+      () => RestaurantDatasourceImpl());
+
+//Repotisatory Restaurant
+  sl.registerLazySingleton<RestaurantReporisatory>(
+      () => RestaurantReporisatoryImpl(sl()));
+
+  //Restaurant usecase
+  sl.registerLazySingleton<AddRestaurantUsecase>(
+      () => AddRestaurantUsecase(sl<RestaurantReporisatory>()));
+
+  sl.registerLazySingleton<UploadImageUsecase>(
+      () => UploadImageUsecase(sl<RestaurantReporisatory>()));
+
+  sl.registerLazySingleton<AddMenuItemsUsecase>(
+      () => AddMenuItemsUsecase(sl<RestaurantReporisatory>()));
+
+  sl.registerLazySingleton<GetAllRestaurantUsecase>(
+      () => GetAllRestaurantUsecase(sl<RestaurantReporisatory>()));
+
+  sl.registerLazySingleton<GetAllMenuUsecase>(
+      () => GetAllMenuUsecase(sl<RestaurantReporisatory>()));
+
+  sl.registerFactory(() => RestaurantCubit());
+  sl.registerFactory(() => MenuCubit());
+
+//-----------------------------------------------------------------------------------------
+// Cart feature (injection).
+//-----------------------------------------------------------------------------------------
+
+//Datasource Cart
+  sl.registerLazySingleton<CartDatasourceInterface>(() => CartDatasourceImpl());
+
+//Repotisatory Cart
+  sl.registerLazySingleton<CartReporisatoryInterface>(
+      () => CartReporisatoryImpl(sl()));
+
+  //Cart usecase
+  sl.registerLazySingleton<AddProductToCartUsecase>(
+      () => AddProductToCartUsecase(sl<CartReporisatoryInterface>()));
+
+  sl.registerLazySingleton<GetAllCartItemsUsecase>(
+      () => GetAllCartItemsUsecase(sl<CartReporisatoryInterface>()));
+
+  sl.registerLazySingleton<GetCartDataUsecase>(
+      () => GetCartDataUsecase(sl<CartReporisatoryInterface>()));
+
+  sl.registerLazySingleton<AddCartData>(
+      () => AddCartData(sl<CartReporisatoryInterface>()));
+//AddCartData
+  //Cart Cubit
+  sl.registerFactory(() => CartCubit());
+  sl.registerFactory(() => CartDataCubit());
 }

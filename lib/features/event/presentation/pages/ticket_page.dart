@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+// import 'package:badges/src/badge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order/core/drawer_menu.dart';
 import 'package:order/core/error/widgets/loading_widget.dart';
+import 'package:order/features/cart/presentation/pages/cart_page.dart';
 import 'package:order/features/event/presentation/cubit/ticket_cubit.dart';
 import 'package:order/features/event/presentation/cubit/ticket_state.dart';
 import 'package:order/features/event/presentation/pages/ticket_widget.dart';
 import 'package:order/features/event/presentation/pages/widgets/event_add_update_pages/event_add_update_page.dart';
-import 'package:order/features/login/presentation/cubit/login_cubit.dart';
-import 'package:order/features/login/presentation/cubit/login_state.dart';
-import 'package:order/features/login/presentation/pages/login_page.dart';
-import 'package:order/features/login/presentation/pages/login_widget.dart';
 
 class TicketPage extends StatefulWidget {
   const TicketPage({super.key});
@@ -29,37 +28,29 @@ String greetings() {
 }
 
 class _TicketPageState extends State<TicketPage> {
-  final GlobalKey<FormState> _keyform = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
-        ],
-        title: Text('Welcome, ${greetings()}'),
-      ),
-      drawer: Drawer(
-        child: Column(
-          children: <Widget>[
-            Expanded(child: Container()),
-            Column(
-              children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    context.read<LoginCubit>().logOut();
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ));
-                  },
-                  icon: const Icon(Icons.logout_outlined),
-                ),
-              ],
+          Badge(
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const CartPage()));
+              },
+              icon: const Icon(Icons.shopping_bag_outlined),
             ),
-          ],
+          ),
+        ],
+        title: Text(
+          'Welcome, ${greetings()}',
+          style: const TextStyle(
+            fontSize: 18,
+          ),
         ),
       ),
+      drawer: const NavigationDrawerr(),
       body: _buildBody(),
       floatingActionButton: _buildFloatingBtn(context),
     );
@@ -104,7 +95,10 @@ class _TicketPageState extends State<TicketPage> {
                       isUpdateEvent: false,
                     )));
       },
-      child: const Icon(Icons.add),
+      child: const Icon(
+        Icons.border_color_rounded,
+        color: Colors.white,
+      ),
     );
   }
 }

@@ -6,8 +6,8 @@ import 'package:order/features/register/presentation/cubit/register_cubit.dart';
 import 'package:order/features/register/presentation/pages/register_page.dart';
 
 class RegisterWidget extends StatefulWidget {
-  RegisterAccountEntity registerAccountEntity;
-  RegisterWidget({super.key, required this.registerAccountEntity});
+  final RegisterAccountEntity registerAccountEntity;
+  const RegisterWidget({super.key, required this.registerAccountEntity});
 
   @override
   State<RegisterWidget> createState() => _RegisterWidgetState();
