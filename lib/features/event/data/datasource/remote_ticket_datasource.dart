@@ -239,15 +239,6 @@ class RemoteTicketDatasource extends TicketDatasourceInterface {
       comments.add(EventModel.fromSnapShot2(doc));
     }
     return comments.map((val) => val.comment).toList();
-
-    // // firebaseDB.firebaseFirestore.collection("Ticket").doc(comment).get();
-    // final retrive =
-    //      firebaseDB.firebaseFirestore.collection("Ticket").doc("Ticket").get();
-    // List<String> comments = await retrive['']
-    // // for (var doc in retrive) {
-    // //   comments.add(EventModel.fromSnapShot(doc));
-    // // }
-    // return comments;
   }
 
   @override

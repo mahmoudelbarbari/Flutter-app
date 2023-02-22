@@ -1,10 +1,10 @@
-import 'package:order/features/cart/domain/entity/cart_entities.dart';
+import 'package:order/features/cart/data/models/cart_items_model.dart';
 import 'package:order/features/event/domain/entities/event_entities.dart';
+import 'package:order/features/restaurant/data/model/restaurant_model.dart';
 
-abstract class CartReporisatory {
-  Future<List<ProductEntity>> getAllProducts();
-  Future<BaseResponse> addItemTocart(ProductEntity product);
-  Future<BaseResponse> removeItemsFromCart(CartEntity cartItems);
-  Future<void> decreaseQuantity(CartEntity cartItems);
-  Future<void> increaseQuantity(CartEntity cartItems);
+abstract class CartReporisatoryInterface {
+  Future<BaseResponse> addProductToCart(MenuModel menuModel);
+  Future<BaseResponse> addCartData(CartItemModel cartItemModel);
+  Future<List<MenuModel>> getAllCartItems();
+  Future<List<CartItemModel>> getCartData();
 }

@@ -44,6 +44,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         Form(
           key: _keyform,
           child: TextFormField(
+            keyboardType: TextInputType.emailAddress,
             style: const TextStyle(fontSize: 20),
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),

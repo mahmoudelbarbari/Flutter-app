@@ -6,10 +6,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:order/core/bloc_observer/bloc_observer.dart';
 import 'package:order/core/theme_app.dart';
+import 'package:order/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:order/features/cart/presentation/cubit/cart_data_cubit.dart';
+import 'package:order/features/cart/presentation/pages/cart_page.dart';
 import 'package:order/features/event/presentation/pages/ticket_page.dart';
 import 'package:order/features/login/presentation/cubit/login_cubit.dart';
 import 'package:order/features/register/presentation/cubit/register_cubit.dart';
 import 'package:order/features/register/presentation/pages/register_page.dart';
+import 'package:order/features/restaurant/presentation/cubit/menu_cubit.dart';
+import 'package:order/features/restaurant/presentation/cubit/restaurant_cubit.dart';
+import 'package:order/features/restaurant/presentation/pages/get_all_restaurants_page/all_restaurants_page.dart';
+import 'package:order/features/restaurant/presentation/pages/menu_page/menu_page.dart';
+import 'package:order/features/restaurant/presentation/pages/add_restaurant_page.dart';
 import 'core/services/push_notification_service.dart';
 import 'features/event/presentation/cubit/ticket_cubit.dart';
 import 'firebase_options.dart';
@@ -48,6 +56,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (_) => di.sl<LoginCubit>()),
           BlocProvider(create: (_) => di.sl<RegisterCubit>()),
           BlocProvider(create: (_) => di.sl<TicketCubit>()..getAllTickets()),
+          BlocProvider(
+              create: (_) => di.sl<RestaurantCubit>()..getAllRestaurants()),
+          BlocProvider(create: (_) => di.sl<MenuCubit>()..getAllMenu()),
+          BlocProvider(create: (_) => di.sl<CartCubit>()..getAllCartItems()),
+          BlocProvider(create: (_) => di.sl<CartDataCubit>()..getData()),
         ],
         child: MaterialApp(
           title: 'Food App',
@@ -57,6 +70,10 @@ class MyApp extends StatelessWidget {
             'login': (context) => const LoginPage(),
             'register': (context) => const RegisterPage(),
             'home': (context) => const TicketPage(),
+            'restaurant': (context) => const RestaurantPage(),
+            'menu': (context) => const MenuPage(),
+            'allrestaurant': (context) => const AllRestaurantPage(),
+            'cart': (context) => const CartPage(),
           },
           home: const LoginPage(),
         ));
