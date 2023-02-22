@@ -49,6 +49,11 @@ dependencies:
   cloud_firestore: ^4.0.5
   firebase_auth: ^4.1.4
   firebase_database: ^10.0.7
+  image_picker: ^0.8.6+1
+  firebase_storage: ^11.0.10
+  permission_handler: ^10.2.0
+  get: ^4.6.5
+  badges: ^3.0.2
   # overlay_support: ^2.1.0
 
 
