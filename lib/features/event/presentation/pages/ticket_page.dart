@@ -1,5 +1,5 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:badges/src/badge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order/core/drawer_menu.dart';
 import 'package:order/core/error/widgets/loading_widget.dart';
@@ -62,22 +62,20 @@ class _TicketPageState extends State<TicketPage> {
       child: BlocConsumer<TicketCubit, TicketState>(
         listener: (context, state) {
           if (state is TicketErrorState) {
-            // final snackBar = SnackBar(content: Text(state.errorMessage));
-            // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            print(state.errorMessage);
+            if (kDebugMode) {
+              print(state.errorMessage);
+            }
           }
         },
         builder: (context, state) {
-          if (state is TicketLoadingState) {
-            return const LoadingWidget();
-          } else if (state is TicketLoadedState) {
+          if (state is TicketLoadedState) {
             return TicketWidget(
               eventEntity: state.eventEntity,
             );
           } else if (state is TicketErrorState) {
-            // final snackBar = SnackBar(content: Text(state.errorMessage));
-            // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            print(state.errorMessage);
+            if (kDebugMode) {
+              print(state.errorMessage);
+            }
           }
           return const LoadingWidget();
         },

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushNotificationService {
@@ -13,23 +14,26 @@ class PushNotificationService {
       _fcm.requestPermission();
     }
 
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_launcher');
+    const AndroidInitializationSettings('ic_launcher');
     var initialzationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
         InitializationSettings(android: initialzationSettingsAndroid);
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
     String? token = await _fcm.getToken();
-    print("FirebaseMessaging token: $token");
+    if (kDebugMode) {
+      print("FirebaseMessaging token: $token");
+    }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
-        print('message : ${notification.body}');
+        if (kDebugMode) {
+          print('message : ${notification.body}');
+        }
         FlutterLocalNotificationsPlugin().show(
             notification.hashCode,
             notification.title,
@@ -50,7 +54,9 @@ class PushNotificationService {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
-        print('$message');
+        if (kDebugMode) {
+          print('$message');
+        }
         // flutterLocalNotificationsPlugin.show(
         //     notification.hashCode,
         //     notification.title,

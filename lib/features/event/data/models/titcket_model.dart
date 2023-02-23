@@ -35,14 +35,50 @@ class MessageModel extends MessageEntity {
         'senderName': senderName,
         'receiverName': receiverName,
       };
-// end
-  // factory MessageModel.fromjson1(MessageEntity messageEntity) => MessageModel(
-  //       userId: messageEntity.userId,
-  //       message: messageEntity.message,
-  //     );
 
   Map<String, dynamic> toJson() => {
         'idUser': userId,
         'message': message,
       };
+}
+
+class ChattModel {
+  String idUser;
+  String message;
+  String timestamp;
+  String senderEmail;
+
+  ChattModel(
+      {required this.idUser,
+      required this.message,
+      required this.timestamp,
+      required this.senderEmail});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'idUser': idUser,
+      'message': message,
+      'timestamp': timestamp,
+      'senderEmail': senderEmail,
+    };
+  }
+
+  factory ChattModel.fromjson(Map<String, dynamic> json) {
+    return ChattModel(
+      idUser: json['idUser'],
+      message: json['message'],
+      timestamp: json['timestamp'],
+      senderEmail: json['senderEmail'],
+    );
+  }
+
+  factory ChattModel.fromSnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+    return ChattModel(
+      idUser: documentSnapshot.data()['idUser'],
+      message: documentSnapshot.data()['message'],
+      timestamp: documentSnapshot.data()['timestamp'].toString(),
+      senderEmail: documentSnapshot.data()['senderEmail'],
+    );
+  }
 }

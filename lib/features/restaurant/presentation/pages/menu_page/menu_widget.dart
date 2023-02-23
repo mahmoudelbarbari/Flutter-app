@@ -93,6 +93,9 @@ class _MenuWidgetState extends State<MenuWidget> {
                 onPressed: () {
                   setState(() {
                     if (formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text("Item added successfully")));
                       context.read<RestaurantCubit>().addMenuItems(MenuModel(
                             name: controllerMenuname.text,
                             description: controllerMenuDescription.text,

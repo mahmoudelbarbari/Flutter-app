@@ -91,12 +91,43 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     labelText: 'Name',
                     prefixIcon: Icon(Icons.person),
                   ),
+                  validator: (value) {
+                    if (value!.isNotEmpty) {
+                      return null;
+                    } else {
+                      return 'please fill the form';
+                    }
+                  },
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(13.0),
+                child: TextFormField(
+                  controller: _controller_email,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please enter your mail address.';
+                    }
+                    if (!RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9.]+')
+                        .hasMatch(value)) {
+                      return "Please enter a valid email address";
+                    }
+                    return null;
+                  },
+                  style: const TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Example@gmail.com',
+                    prefixIcon: Icon(Icons.email),
+                  ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
                   obscureText: true,
+                  keyboardType: TextInputType.multiline,
                   controller: _controller_password,
                   style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
@@ -110,43 +141,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     }
                     if (!RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9.]+')
                         .hasMatch(value)) {
-                      return "Please enter a valid Password";
+                      return 'Please enter a valid email address....\nYour password must be at least 8 characters long,\nattached with lowercase and uppercase letters';
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      _controller_password.text = value;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(13.0),
-                child: TextFormField(
-                  controller: _controller_email,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your mail address.';
-                    }
-                    if (!RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9.]+')
-                        .hasMatch(value)) {
-                      return "Please enter a valid email address";
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      _controller_email.text = value;
-                    });
-                  },
-                  style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Email',
-                    prefixIcon: Icon(Icons.email),
-                  ),
                 ),
               ),
               Container(
@@ -184,13 +182,27 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 child: TextFormField(
                   controller: _controller_phone,
                   keyboardType: TextInputType.number,
-                  maxLength: 15,
+                  // maxLength: 15,
                   style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Phone Number',
                     prefixIcon: Icon(Icons.smartphone_sharp),
                   ),
+                  validator: (value, {int i = 1}) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your Phone number.';
+                    }
+                    // if (i < 11 || i > 13) {
+                    //   return 'Please enter an valid phone number';
+                    // }
+                    if (!RegExp(
+                            r'(^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$)')
+                        .hasMatch(value)) {
+                      return 'Please enter an valid phone number';
+                    }
+                    return null;
+                  },
                 ),
               ),
               Container(
@@ -201,9 +213,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15))),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const RegisterPage(),
-                    ));
                     setState(() {
                       if (_keyform.currentState!.validate()) {
                         context.read<RegisterCubit>().registerAccountFromRemote(

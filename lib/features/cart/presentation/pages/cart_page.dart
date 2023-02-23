@@ -41,14 +41,15 @@ class _CartPageState extends State<CartPage> {
           builder: (context, state) {
             if (state is CartItemsLoadded) {
               return CartWidget(menuModel: state.menuModel);
-            } else if (state is CartError) {
+            }
+            if (state is CartError) {
               if (kDebugMode) {
                 print(state.errorMessage);
               }
             }
             return const Center(
               child: Text(
-                'No items in the cart in the meantime..!',
+                'Your cart is empty..!',
                 style: TextStyle(fontSize: 15),
               ),
             );

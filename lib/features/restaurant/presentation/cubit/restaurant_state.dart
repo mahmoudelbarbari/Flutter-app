@@ -25,7 +25,9 @@ class RestaurantError extends RestaurantState {
 
 class CreateRestaurantSuccessfully extends RestaurantState {
   RegisterAccountEntity registerAccountEntity;
-  CreateRestaurantSuccessfully({required this.registerAccountEntity});
+  String message = "Addedd Suessfully";
+  CreateRestaurantSuccessfully(
+      {required this.registerAccountEntity, required this.message});
 }
 
 class ImageSuccessState extends RestaurantState {

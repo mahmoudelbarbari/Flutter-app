@@ -31,8 +31,6 @@ class EventWidget extends StatelessWidget {
               MaterialPageRoute(
                 builder: (_) => EventDetailsPage(
                   eventEntity: eventEntity[index],
-                  uid: '',
-                  userName: '',
                 ),
               ),
             );

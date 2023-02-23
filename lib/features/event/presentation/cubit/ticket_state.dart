@@ -56,7 +56,7 @@ class MessageInit extends TicketState {}
 
 class MessageLoadingState extends TicketState {}
 
-class MessageLoadedState extends TicketState {
-  final List<MessageEntity> messages;
-  MessageLoadedState({required this.messages});
-}
+// class MessageLoadedState extends TicketState {
+//   final List<ChattModel> messages;
+//   MessageLoadedState({required this.messages});
+// }

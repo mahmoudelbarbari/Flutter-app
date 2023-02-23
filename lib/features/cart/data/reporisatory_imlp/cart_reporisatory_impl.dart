@@ -19,11 +19,6 @@ class CartReporisatoryImpl implements CartReporisatoryInterface {
   }
 
   @override
-  Future<List<CartItemModel>> getCartData() async {
-    return await cartDatasourceInterface.getCartData();
-  }
-  
-  @override
   Future<BaseResponse> addCartData(CartItemModel cartItemModel) {
     // TODO: implement addCartData
     throw UnimplementedError();

@@ -1,28 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order/features/event/domain/entities/event_entities.dart';
-import 'package:order/features/event/domain/remote_usecases/add_comment_OnTicket.dart';
-import 'package:order/features/event/domain/remote_usecases/add_message.dart';
 import 'package:order/features/event/domain/remote_usecases/add_ticket.dart';
 import 'package:order/features/event/domain/remote_usecases/delete_ticket.dart';
-import 'package:order/features/event/domain/remote_usecases/get_messages_usecase.dart';
 import 'package:order/features/event/domain/remote_usecases/message_usecase.dart';
-import 'package:order/features/event/domain/remote_usecases/remote_get_all_comment.dart';
 import 'package:order/features/event/domain/remote_usecases/remote_get_all_ticket.dart';
 import 'package:order/features/event/domain/remote_usecases/update_ticket.dart';
 import 'package:order/features/event/presentation/cubit/ticket_state.dart';
+import 'package:order/features/login/domain/entities/account_entites.dart';
 import 'package:order/injection_container.dart';
 
 class TicketCubit extends Cubit<TicketState> {
   late AddTicketUsecase addTicketUsecase;
-  late RemoteGetAllCommentsUsecase remoteGetAllCommentsUsecase;
-  late AddCommentUsecase addCommentUsecase;
   late DeleteTicketUsecase deleteTicketUsecase;
   late UpdateTicketUsecase updateTicketUsecase;
   late GetAllTicketUsecase getAllTicketUsecase;
   late UploadMessageUsecase uploadMessageUsecase;
-  //last
-  late AddMessageUsecase addMessageUsecase;
-  late GetMessageUsecase getMessageUsecase;
   TicketCubit() : super(TicketStateInt());
 
   Future<void> getAllTickets() async {
@@ -36,24 +28,16 @@ class TicketCubit extends Cubit<TicketState> {
     }
   }
 
-  Future<void> getAllComments() async {
-    try {
-      emit(TicketLoadingState());
-      remoteGetAllCommentsUsecase = sl();
-      final allComments = await remoteGetAllCommentsUsecase.call();
-      emit(CommentLoadedState(eventEntity: allComments));
-    } catch (e) {
-      emit(TicketErrorState(errorMessage: e.toString()));
-    }
-  }
-
   Future<void> addTicket(EventEntity eventEntity) async {
     try {
       emit(TicketLoadingState());
       addTicketUsecase = sl();
+      getAllTicketUsecase = sl();
+      final allData = await getAllTicketUsecase.call();
       final addedTicket = await addTicketUsecase.call(eventEntity);
       if (addedTicket.status) {
         emit(TicketSuccessState(addedTicket));
+        emit(TicketLoadedState(eventEntity: allData));
       } else {
         emit(TicketErrorState(errorMessage: addedTicket.message));
       }
@@ -62,31 +46,13 @@ class TicketCubit extends Cubit<TicketState> {
     }
   }
 
-  Future<void> remoteAddComment(EventEntity eventEntity) async {
-    try {
-      emit(TicketLoadingState());
-      addCommentUsecase = sl();
-      final addedComment = await addCommentUsecase.call(eventEntity);
-      if (addedComment.status) {
-        emit(CommentSuccessState(addedComment));
-        final allComments = await remoteGetAllCommentsUsecase.call();
-        emit(CommentLoadedState(eventEntity: allComments));
-      } else {
-        emit(TicketErrorState(errorMessage: addedComment.message));
-      }
-    } catch (e) {
-      emit(TicketErrorState(errorMessage: e.toString()));
-    }
-  }
-
-  Future<void> remoteAddMessage({
-    required String idUser,
-    required String message,
-  }) async {
+  Future<void> remoteAddMessage(
+      String idUser, String message, Account account) async {
     try {
       emit(TicketLoadingState());
       uploadMessageUsecase = sl();
-      final addedMessage = await uploadMessageUsecase.call(idUser, message);
+      final addedMessage =
+          await uploadMessageUsecase.call(idUser, message, account);
       emit(MessageSuccessState(addedMessage));
     } catch (e) {
       emit(TicketErrorState(errorMessage: e.toString()));
@@ -118,32 +84,6 @@ class TicketCubit extends Cubit<TicketState> {
       } else {
         emit(TicketErrorState(errorMessage: updatedTicket.message));
       }
-    } catch (e) {
-      emit(TicketErrorState(errorMessage: e.toString()));
-    }
-  }
-
-//last
-  Future<void> sendTextMsg(
-      {required String name,
-      required String uid,
-      required String message}) async {
-    try {
-      addMessageUsecase = sl();
-      await addMessageUsecase.call(MessageEntity(uid, message, name, ""));
-    } catch (e) {
-      emit(TicketErrorState(errorMessage: e.toString()));
-    }
-  }
-
-  Future<void> getTextMessages() async {
-    try {
-      emit(TicketLoadingState());
-      getMessageUsecase = sl();
-      final messages = getMessageUsecase.call();
-      messages.listen((msg) {
-        emit(MessageLoadedState(messages: msg));
-      });
     } catch (e) {
       emit(TicketErrorState(errorMessage: e.toString()));
     }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order/features/event/presentation/cubit/ticket_cubit.dart';
 import 'package:order/features/event/presentation/pages/ticket_page.dart';
 import 'package:order/features/login/presentation/cubit/login_cubit.dart';
 import 'package:order/features/login/presentation/pages/login_page.dart';
+import 'package:order/features/restaurant/presentation/cubit/restaurant_cubit.dart';
 import 'package:order/features/restaurant/presentation/pages/add_restaurant_page.dart';
 import 'package:order/features/restaurant/presentation/pages/get_all_restaurants_page/all_restaurants_page.dart';
 
@@ -73,6 +75,7 @@ class NavigationDrawerr extends StatelessWidget {
             title: const Text('Home'),
             leading: const Icon(Icons.home),
             onTap: () {
+              context.read<TicketCubit>().getAllTickets();
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const TicketPage()));
             },
@@ -81,6 +84,7 @@ class NavigationDrawerr extends StatelessWidget {
             title: const Text('Restaurants'),
             leading: const Icon(Icons.restaurant),
             onTap: () {
+              context.read<RestaurantCubit>().getAllRestaurants();
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const AllRestaurantPage()));
             },

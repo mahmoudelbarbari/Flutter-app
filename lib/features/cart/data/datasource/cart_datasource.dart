@@ -24,7 +24,6 @@ abstract class CartDatasourceInterface extends FirebaseDatasourceProvider {
   Future<BaseResponse> addProductToCart(MenuModel menuModel);
   Future<BaseResponse> addCartData(CartItemModel cartItemModel);
   Future<List<MenuModel>> getAllCartItems();
-  Future<List<CartItemModel>> getCartData();
 }
 
 class CartDatasourceImpl extends CartDatasourceInterface {
@@ -74,32 +73,5 @@ class CartDatasourceImpl extends CartDatasourceInterface {
       }
     });
     return cartItems;
-  }
-
-  @override
-  Future<List<CartItemModel>> getCartData() async {
-    final retrive = firebaseFirestore.collection('Cart');
-    final querySnapshot = await retrive.get();
-    querySnapshot.docs.map((doc) => doc.data()).toList();
-    List<CartItemModel> cartData = [];
-    retrive.get().then((querySnapshot) {
-      for (var doc in querySnapshot.docs) {
-        cartData.add(CartItemModel.fromSnapShot(doc));
-      }
-    });
-    return cartData;
-    // List<CartItemModel> cartData = [];
-    // firebaseFirestore.collection("Cart").doc().snapshots().map((snapshot) {
-    //   if (snapshot.exists) {
-    //     Map<String, dynamic>? data = snapshot.data();
-    //     data?.forEach((key, value) {
-    //       cartData.add(CartItemModel(
-    //           name: value['name'],
-    //           quantity: value['quantity'],
-    //           price: value['price']));
-    //     });
-    //   }
-    // });
-    // return cartData;
   }
 }

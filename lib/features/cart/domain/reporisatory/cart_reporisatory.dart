@@ -6,5 +6,4 @@ abstract class CartReporisatoryInterface {
   Future<BaseResponse> addProductToCart(MenuModel menuModel);
   Future<BaseResponse> addCartData(CartItemModel cartItemModel);
   Future<List<MenuModel>> getAllCartItems();
-  Future<List<CartItemModel>> getCartData();
 }

@@ -1,5 +1,6 @@
 import 'package:order/features/event/data/datasource/remote_ticket_datasource.dart';
 import 'package:order/features/event/data/models/event_model.dart';
+import 'package:order/features/event/data/models/titcket_model.dart';
 import 'package:order/features/event/domain/entities/event_entities.dart';
 import 'package:order/features/event/domain/reporisatory/ticket_reporisatory.dart';
 import 'package:order/features/login/domain/entities/account_entites.dart';
@@ -36,31 +37,17 @@ class TicketReporisatoryImlp implements TicketReporisatory {
   }
 
   @override
-  Future<BaseResponse> remoteAddComment(EventEntity eventEntity) async {
-    return await remoteTicketDatasource
-        .remoteAddComment(EventModel.fromEntity(eventEntity));
-  }
-
-  @override
-  Future<List<String?>> remoteGetAllComment() {
-    return remoteTicketDatasource.remoteGetAllComment();
-  }
-
-  @override
-  Future<Account> remoteUploadMessage(String idUser, String message) {
-    return remoteTicketDatasource.uploadMessage(
+  Future<BaseResponse> remoteUploadMessage(
+      String idUser, String message, Account account) async {
+    return await remoteTicketDatasource.uploadMessage(
       idUser,
       message,
+      account,
     );
   }
 
   @override
-  Future<void> addMessage(MessageEntity messageEntity) {
-    return remoteTicketDatasource.addMessage(messageEntity);
-  }
-
-  @override
-  Stream<List<MessageEntity>> getMessages() {
-    return remoteTicketDatasource.getMessages();
+  Future<List<ChattModel>> getMessages() async {
+    return await remoteTicketDatasource.getAllMessages();
   }
 }

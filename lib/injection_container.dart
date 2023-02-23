@@ -6,21 +6,17 @@ import 'package:order/features/cart/domain/reporisatory/cart_reporisatory.dart';
 import 'package:order/features/cart/domain/usecase/add_cart_data_usecase.dart';
 import 'package:order/features/cart/domain/usecase/add_items_to_cart_usecase.dart';
 import 'package:order/features/cart/domain/usecase/get_all_cart_items_usecase.dart';
-import 'package:order/features/cart/domain/usecase/get_cart_data_usecase.dart';
 import 'package:order/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:order/features/cart/presentation/cubit/cart_data_cubit.dart';
 import 'package:order/features/event/data/datasource/remote_ticket_datasource.dart';
 import 'package:order/features/event/data/reporisatory/remote_ticket_reporisatory_impl.dart';
-import 'package:order/features/event/domain/remote_usecases/add_comment_OnTicket.dart';
-import 'package:order/features/event/domain/remote_usecases/add_message.dart';
 import 'package:order/features/event/domain/remote_usecases/add_ticket.dart';
 import 'package:order/features/event/domain/remote_usecases/delete_ticket.dart';
 import 'package:order/features/event/domain/remote_usecases/get_messages_usecase.dart';
 import 'package:order/features/event/domain/remote_usecases/message_usecase.dart';
-import 'package:order/features/event/domain/remote_usecases/remote_get_all_comment.dart';
 import 'package:order/features/event/domain/remote_usecases/remote_get_all_ticket.dart';
 import 'package:order/features/event/domain/remote_usecases/update_ticket.dart';
 import 'package:order/features/event/domain/reporisatory/ticket_reporisatory.dart';
+import 'package:order/features/event/presentation/cubit/cubit_message/chat_cubit.dart';
 import 'package:order/features/event/presentation/cubit/ticket_cubit.dart';
 import 'package:order/features/login/data/datasources/remote_login_user.dart';
 import 'package:order/features/login/domain/usecases/login_usecase.dart';
@@ -112,7 +108,7 @@ void init() {
   sl.registerLazySingleton<TicketReporisatory>(
       () => TicketReporisatoryImlp(sl<TicketDatasourceInterface>()));
 
-  // //Event_Usecases
+  // Local Event_Usecases
   // sl.registerLazySingleton(() => GetAllEventsUsecase(sl()));
   // sl.registerLazySingleton(() => GetAllCommentsUsecase(sl()));
   // sl.registerLazySingleton(() => CommentOnEventUsecase(sl()));
@@ -121,10 +117,6 @@ void init() {
   // sl.registerLazySingleton(() => DeleteEventUsecase(sl()));
 
   //Remote_Ticket_Usecases
-  sl.registerLazySingleton<RemoteGetAllCommentsUsecase>(
-      () => RemoteGetAllCommentsUsecase(sl<TicketReporisatory>()));
-  sl.registerLazySingleton<AddCommentUsecase>(
-      () => AddCommentUsecase(sl<TicketReporisatory>()));
   sl.registerLazySingleton<AddTicketUsecase>(
       () => AddTicketUsecase(sl<TicketReporisatory>()));
   sl.registerLazySingleton<UpdateTicketUsecase>(
@@ -133,16 +125,15 @@ void init() {
       () => DeleteTicketUsecase(sl<TicketReporisatory>()));
   sl.registerLazySingleton<GetAllTicketUsecase>(
       () => GetAllTicketUsecase(sl<TicketReporisatory>()));
-  sl.registerLazySingleton<AddMessageUsecase>(
-      () => AddMessageUsecase(sl<TicketReporisatory>()));
-  sl.registerLazySingleton<GetMessageUsecase>(
-      () => GetMessageUsecase(sl<TicketReporisatory>()));
   sl.registerLazySingleton<UploadMessageUsecase>(
       () => UploadMessageUsecase(sl<TicketReporisatory>()));
+  sl.registerLazySingleton<GetMessagesUsecase>(
+      () => GetMessagesUsecase(sl<TicketReporisatory>()));
 
   //Event bloc cubit
   // sl.registerLazySingleton(() => EventCubit());
   sl.registerFactory(() => TicketCubit());
+  sl.registerFactory(() => ChatCubit());
 
 //-----------------------------------------------------------------------------------------
 // Restauratn feature (injection).
@@ -193,13 +184,9 @@ void init() {
   sl.registerLazySingleton<GetAllCartItemsUsecase>(
       () => GetAllCartItemsUsecase(sl<CartReporisatoryInterface>()));
 
-  sl.registerLazySingleton<GetCartDataUsecase>(
-      () => GetCartDataUsecase(sl<CartReporisatoryInterface>()));
-
   sl.registerLazySingleton<AddCartData>(
       () => AddCartData(sl<CartReporisatoryInterface>()));
 //AddCartData
   //Cart Cubit
   sl.registerFactory(() => CartCubit());
-  sl.registerFactory(() => CartDataCubit());
 }

@@ -1,11 +1,11 @@
-import 'package:order/features/event/domain/entities/event_entities.dart';
+import 'package:order/features/event/data/models/titcket_model.dart';
 import 'package:order/features/event/domain/reporisatory/ticket_reporisatory.dart';
 
-class GetMessageUsecase {
+class GetMessagesUsecase {
   final TicketReporisatory ticketReporisatory;
-  GetMessageUsecase(this.ticketReporisatory);
+  GetMessagesUsecase(this.ticketReporisatory);
 
-  Stream<List<MessageEntity>> call() {
-    return ticketReporisatory.getMessages();
+  Future<List<ChattModel>> call() async {
+    return await ticketReporisatory.getMessages();
   }
 }

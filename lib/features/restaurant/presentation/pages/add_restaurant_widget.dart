@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order/features/restaurant/data/model/restaurant_model.dart';
@@ -109,6 +108,11 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                     setState(() {
                       if (formKey.currentState!.validate()) {
                         isPressed = true;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                backgroundColor: Colors.green,
+                                content:
+                                    Text("Restaurant added successfully")));
                         context.read<RestaurantCubit>().addRestaurant(
                               RestaurantModel(
                                 restaurantName: controllerRestaurantname.text,

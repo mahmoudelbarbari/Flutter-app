@@ -42,6 +42,9 @@ class _AllMenuPageState extends State<AllMenuPage> {
                 menuModel: state.menuModel,
               );
             } else if (state is MenuError) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text(state.errorMessage)));
               if (kDebugMode) {
                 print(state.errorMessage);
               }

@@ -22,7 +22,7 @@ class LoginCubit extends Cubit<LoginState> {
       final loggedin = await remoteLoginUsecase.call(email, password);
       // return emit(LoginSucessState("Successfully Login"));
       if (loggedin.status) {
-        return emit(LoginSucessState("Successfully Login"));
+        return emit(LoginSucessState("Logged in successfully"));
       } else {
         return emit(ErrorState(errorMessage: "Faild to login"));
       }

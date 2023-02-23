@@ -29,10 +29,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
           listener: (context, state) {
             if (state is CreateRestaurantSuccessfully) {
               registerAccountEntity = state.registerAccountEntity;
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  backgroundColor: Colors.green,
-                  content: Text("Added Successfully")));
             }
+
             if (state is RestaurantError) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.errorMessage)));

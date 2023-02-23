@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order/features/register/domain/entities/register_entities.dart';
@@ -20,7 +19,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     final remoteRegisterUsecase = RemoteRegisterUsecase(sl());
 
     try {
-      await remoteRegisterUsecase(email, password,registerAccountEntity);
+      await remoteRegisterUsecase(email, password, registerAccountEntity);
       emit(CreateUserSuccessfully(
         registerAccountEntity: registerAccountEntity,
       ));

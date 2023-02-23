@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order/features/event/domain/entities/event_entities.dart';
 import 'package:order/features/event/presentation/cubit/ticket_cubit.dart';
+import 'package:order/features/event/presentation/pages/ticket_page.dart';
 import 'package:order/features/event/presentation/pages/widgets/event_add_update_pages/form_submit_btn.dart';
 import 'package:order/features/event/presentation/pages/widgets/event_add_update_pages/text_form_field_widget.dart';
 
@@ -59,6 +60,13 @@ class _FormWidgetState extends State<FormWidget> {
     final isValid = _formKey.currentState!.validate();
 
     if (isValid) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const TicketPage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("You created an ticket successfully")));
       final eventEntity = EventEntity(
         id: widget.isUpdateEvent ? widget.eventEntity!.id : null,
         title: titleController.text,
